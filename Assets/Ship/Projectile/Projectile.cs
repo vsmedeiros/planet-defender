@@ -4,11 +4,11 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
     public float lifetime = .5f;
-
-   
-
+    public float rotationSpeed = 100f;
     private void Update()
     {
+        Transform childTransform = transform.Find("Sprite");
+        childTransform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
         transform.Translate(Vector2.up * speed * Time.deltaTime); // Move o projétil
         lifetime -= Time.deltaTime;
         if (lifetime <= 0)
@@ -17,12 +17,15 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void SetParameters(float speed, float lifetime, float rotationSpeed)
     {
-        if (collision.CompareTag("Enemy")) // Verifica se colidiu com um inimigo
-        {
-            Destroy(collision.gameObject); // Destrói o inimigo
-            Destroy(gameObject); // Destrói o projétil
-        }
+        this.speed = speed;
+        this.lifetime = lifetime;
+        this.rotationSpeed = rotationSpeed;
+    }
+
+    public float CalculateMaxDistance()
+    {
+        return speed * lifetime;
     }
 }

@@ -1,0 +1,4 @@
+repository "planet-defender@broken_tooth_studios@cloud"
+  path "/"
+    br "/main"
+    co "/main"
